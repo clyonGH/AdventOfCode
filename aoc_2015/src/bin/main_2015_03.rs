@@ -17,14 +17,7 @@ fn main() {
 
     // first part
     for instruction in data.chars() {
-        match instruction {
-            '^' => s_coord_current = (s_coord_current.0, s_coord_current.1 + 1),
-            'v' => s_coord_current = (s_coord_current.0, s_coord_current.1 - 1),
-            '<' => s_coord_current = (s_coord_current.0 - 1, s_coord_current.1),
-            '>' => s_coord_current = (s_coord_current.0 + 1, s_coord_current.1),
-            _ => (),
-        }
-
+        s_coord_current = new_coordinates(instruction, s_coord_current);
         coord_reached.insert(s_coord_current);
     }
 
@@ -42,22 +35,10 @@ fn main() {
 
     for instruction in data.chars().enumerate() {
         if instruction.0 % 2 == 0 {
-            match instruction.1 {
-                '^' => rs_coord_current = (rs_coord_current.0, rs_coord_current.1 + 1),
-                'v' => rs_coord_current = (rs_coord_current.0, rs_coord_current.1 - 1),
-                '<' => rs_coord_current = (rs_coord_current.0 - 1, rs_coord_current.1),
-                '>' => rs_coord_current = (rs_coord_current.0 + 1, rs_coord_current.1),
-                _ => (),
-            }
+            rs_coord_current = new_coordinates(instruction.1, rs_coord_current);
             coord_reached.insert(rs_coord_current);
         } else {
-            match instruction.1 {
-                '^' => s_coord_current = (s_coord_current.0, s_coord_current.1 + 1),
-                'v' => s_coord_current = (s_coord_current.0, s_coord_current.1 - 1),
-                '<' => s_coord_current = (s_coord_current.0 - 1, s_coord_current.1),
-                '>' => s_coord_current = (s_coord_current.0 + 1, s_coord_current.1),
-                _ => (),
-            }
+            s_coord_current = new_coordinates(instruction.1, s_coord_current);
             coord_reached.insert(s_coord_current);
         }
     }
@@ -66,4 +47,17 @@ fn main() {
         "number of houses reached by Santa and Robo-Santa: {:?}",
         coord_reached.len()
     );
+}
+
+fn new_coordinates(instr: char, (x, y): (i32, i32)) -> (i32, i32) {
+    let mut new_x_y = (0, 0);
+    match instr {
+        '^' => new_x_y = (x, y + 1),
+        'v' => new_x_y = (x, y - 1),
+        '<' => new_x_y = (x - 1, y),
+        '>' => new_x_y = (x + 1, y),
+        _ => (),
+    }
+
+    new_x_y
 }
