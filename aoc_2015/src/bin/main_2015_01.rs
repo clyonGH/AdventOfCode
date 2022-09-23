@@ -8,7 +8,6 @@ fn main() {
     file.read_to_string(&mut data)
         .expect("Error while reading file");
 
-    // FIRST OPTION :)
     let mut floor: i16 = 0;
     let mut basement_found = false;
 
@@ -19,11 +18,13 @@ fn main() {
             _ => (),
         }
 
+        // second part
         if floor == -1 && !basement_found {
             basement_found = true;
             println!("basement reached at position: {}", input_index + 1);
         }
     }
 
+    // first part
     println!("final floor: {}\n", floor);
 }

@@ -16,6 +16,7 @@ fn main() -> io::Result<()> {
         data_vector.push(split_line);
     }
 
+    // first part
     let first_part_result: u32 = data_vector
         .iter()
         .map(|v| 3 * v[0] * v[1] + 2 * (v[0] * v[2] + v[1] * v[2]))
@@ -26,6 +27,7 @@ fn main() -> io::Result<()> {
         first_part_result
     );
 
+    // second part
     let second_part_result: u32 = data_vector
         .iter()
         .map(|v| 2 * (v[0] + v[1]) + v[0] * v[1] * v[2])
