@@ -54,15 +54,15 @@ fn is_naughty_string(input_line: &str) -> bool {
 }
 
 fn has_twice_a_pair_of_two_letters(input_line: &str) -> bool {
-    let collected_windows = input_line.chars().collect::<Vec<char>>();
-    let mut all_windows = collected_windows.windows(2).enumerate();
-
-    let find_another_pair = all_windows.any(|(index, window)| {
-        let window_str = window.iter().collect::<String>();
-        input_line[index + 2..].contains(&window_str)
-    });
-
-    find_another_pair
+    input_line
+        .chars()
+        .collect::<Vec<char>>() // collected to Vec<char> for windows
+        .windows(2)
+        .enumerate() // getting the index where pair found to slice it later
+        .any(|(index, window)| {
+            let window_str = window.iter().collect::<String>();
+            input_line[index + 2..].contains(&window_str) // slicing after the found pair and referencing the string in order not to move it
+        })
 }
 
 fn has_one_letter_in_between(input_line: &str) -> bool {
