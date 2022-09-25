@@ -58,10 +58,10 @@ fn has_twice_a_pair_of_two_letters(input_line: &str) -> bool {
         .chars()
         .collect::<Vec<char>>() // collected to Vec<char> for windows
         .windows(2)
+        .map(|window| window.iter().collect::<String>()) // put the window of 2 inside a string
         .enumerate() // getting the index where pair found to slice it later
         .any(|(index, window)| {
-            let window_str = window.iter().collect::<String>();
-            input_line[index + 2..].contains(&window_str) // slicing after the found pair and referencing the string in order not to move it
+            input_line[index + 2..].contains(&window) // slicing after the found pair and referencing the string in order not to move it
         })
 }
 
