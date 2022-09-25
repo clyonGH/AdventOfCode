@@ -122,6 +122,6 @@ fn main() {
             break;
         }
 
-        // second part: modify the input and run again! :)
+        // second part: modify the input line 335 with "46065 -> b" and run again! :)
     }
 }
