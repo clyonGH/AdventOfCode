@@ -21,7 +21,6 @@ fn look_and_say(previous: Vec<u8>, nb_iter: u8) -> Vec<u8> {
     if nb_iter == 0 {
         previous
     } else {
-        // fold seems to slow calculations
         let mut truple = look_and_say(previous, nb_iter - 1)
             .iter()
             .fold((Vec::new(), 0, 0), find_answer);
@@ -34,15 +33,14 @@ fn look_and_say(previous: Vec<u8>, nb_iter: u8) -> Vec<u8> {
     }
 }
 
-fn find_answer(acc: (Vec<u8>, u8, u8), &current_u8: &u8) -> (Vec<u8>, u8, u8) {
+fn find_answer(mut acc: (Vec<u8>, u8, u8), &current_u8: &u8) -> (Vec<u8>, u8, u8) {
     match acc.2 {
         0 => (acc.0, 1, current_u8), // initial case
         n if n == current_u8 => (acc.0, acc.1 + 1, n),
         _ => {
-            let mut new_acc = acc.0.clone();
-            new_acc.push(acc.1);
-            new_acc.push(acc.2);
-            (new_acc, 1, current_u8)
+            acc.0.push(acc.1);
+            acc.0.push(acc.2);
+            (acc.0, 1, current_u8)
         }
     }
 }
