@@ -36,62 +36,33 @@ fn main() {
         let compound_3 = caps.get(6).unwrap().as_str().to_string();
         let compound_3_nb = caps.get(7).unwrap().as_str().parse::<u8>().unwrap();
 
+        let new_sue = HashMap::from([
+            (compound_1, compound_1_nb),
+            (compound_2, compound_2_nb),
+            (compound_3, compound_3_nb),
+        ]);
+
         // first part
-        if compound_1_nb == *info_mfcsam.get(&compound_1).unwrap()
-            && compound_2_nb == *info_mfcsam.get(&compound_2).unwrap()
-            && compound_3_nb == *info_mfcsam.get(&compound_3).unwrap()
+        if new_sue
+            .iter()
+            .all(|(compound, &value)| value == info_mfcsam.get(compound).cloned().unwrap())
         {
             println!("Sue {sue_nb} got me the gift");
         }
 
         // second part
-        let mut true_sue = false;
-        if ((compound_1.eq("cats") || compound_1.eq("trees"))
-            && compound_1_nb > *info_mfcsam.get(&compound_1).unwrap())
-            || ((compound_1.eq("pomeranians") || compound_1.eq("goldfish"))
-                && compound_1_nb < *info_mfcsam.get(&compound_1).unwrap())
-            || (compound_1_nb == *info_mfcsam.get(&compound_1).unwrap())
-        {
-            true_sue = true;
-        } else {
-            true_sue = false;
-        }
-
-        if true_sue {
-            if ((compound_2.eq("cats") || compound_2.eq("trees"))
-                && compound_2_nb > *info_mfcsam.get(&compound_2).unwrap())
-                || ((compound_2.eq("pomeranians") || compound_2.eq("goldfish"))
-                    && compound_2_nb < *info_mfcsam.get(&compound_2).unwrap())
-                || (compound_2_nb == *info_mfcsam.get(&compound_2).unwrap())
-            {
-                true_sue = true;
-            } else {
-                true_sue = false;
-            }
-
-            if true_sue {
-                if ((compound_3.eq("cats") || compound_3.eq("trees"))
-                    && compound_3_nb > *info_mfcsam.get(&compound_3).unwrap())
-                    || ((compound_3.eq("pomeranians") || compound_3.eq("goldfish"))
-                        && compound_3_nb < *info_mfcsam.get(&compound_3).unwrap())
-                    || (compound_3_nb == *info_mfcsam.get(&compound_3).unwrap())
-                {
-                    true_sue = true;
-                } else {
-                    true_sue = false;
-                }
-            }
-        }
-
-        if compound_1_nb == *info_mfcsam.get(&compound_1).unwrap()
-            && compound_2_nb == *info_mfcsam.get(&compound_2).unwrap()
-            && compound_3_nb == *info_mfcsam.get(&compound_3).unwrap()
-        {
-            true_sue = false;
-        }
-
-        if true_sue {
-            println!("In the end, it was Sue {sue_nb} who got me the gift");
+        if comp_sues(&info_mfcsam, new_sue) {
+            println!("In the very end, it was Sue {sue_nb} who got me the gift");
         }
     }
+}
+
+fn comp_sues(info_mfcsam: &HashMap<String, u8>, new_sue: HashMap<String, u8>) -> bool {
+    new_sue
+        .into_iter()
+        .all(|(compound, value)| match compound.as_str() {
+            "cats" | "trees" => value > info_mfcsam.get(&compound).cloned().unwrap(),
+            "pomeranians" | "goldfish" => value < info_mfcsam.get(&compound).cloned().unwrap(),
+            _ => value == info_mfcsam.get(&compound).cloned().unwrap(),
+        })
 }
