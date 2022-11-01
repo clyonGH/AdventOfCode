@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::prelude::*;
 
 const DEBUG: bool = false;
-const PART_2: bool = false;
+const PART_2: bool = true;
 
 const LOWEST_SPELL_COST: i16 = 53;
 const MAX_TOTAL_SPELL: i16 = 1400;
@@ -149,14 +149,6 @@ fn fight_boss(player: &Character, boss: &Character, spell: &Spell) -> (Character
     let mut updated_player: Character = player.clone();
 
     // player's turn
-    // second part: player loses 1 hp at the beginning of their turn
-    if PART_2 {
-        updated_player.hit_points -= 1;
-        if updated_player.hit_points <= 0 {
-            return (updated_player, boss_hp);
-        }
-    }
-
     updated_player = cast_spell(spell, updated_player);
 
     // player damage
@@ -167,6 +159,14 @@ fn fight_boss(player: &Character, boss: &Character, spell: &Spell) -> (Character
     }
 
     // boss's turn
+    // second part: player loses 1 hp at the beginning of each turn
+    if PART_2 {
+        updated_player.hit_points -= 1;
+        if updated_player.hit_points <= 0 {
+            return (updated_player, boss_hp);
+        }
+    }
+
     updated_player = spells_effects(updated_player);
 
     // spell effects (poison)
@@ -184,6 +184,14 @@ fn fight_boss(player: &Character, boss: &Character, spell: &Spell) -> (Character
         updated_player.hit_points = updated_player.hit_points + updated_player.armor - boss.damage;
     } else {
         updated_player.hit_points = updated_player.hit_points - 1;
+    }
+
+    // second part: player loses 1 hp at the beginning of each turn
+    if PART_2 {
+        updated_player.hit_points -= 1;
+        if updated_player.hit_points <= 0 {
+            return (updated_player, boss_hp);
+        }
     }
 
     updated_player = spells_effects(updated_player);
