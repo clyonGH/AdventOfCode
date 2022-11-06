@@ -20,20 +20,22 @@ fn main() {
 
     // initial button is 5: row 1, column 1
     let mut button: (u8, u8) = (1, 1);
-    let mut code: Vec<u8> = Vec::new();
 
-    data.lines().for_each(|line| {
-        line.chars().into_iter().for_each(|instruction| {
-            match instruction {
-                'U' => move_up(&mut button),
-                'D' => move_down(&mut button),
-                'R' => move_right(&mut button),
-                'L' => move_left(&mut button),
-                _ => button,
-            };
-        });
-        code.push(keypad[button.0 as usize][button.1 as usize]);
-    });
+    let code: Vec<u8> = data
+        .lines()
+        .map(|line| {
+            line.chars().into_iter().for_each(|instruction| {
+                match instruction {
+                    'U' => move_up(&mut button),
+                    'D' => move_down(&mut button),
+                    'R' => move_right(&mut button),
+                    'L' => move_left(&mut button),
+                    _ => button,
+                };
+            });
+            keypad[button.0 as usize][button.1 as usize]
+        })
+        .collect();
 
     println!("the bathroom code is: {:?}", code);
 
@@ -48,20 +50,22 @@ fn main() {
 
     // initial button is 5: row 2, column 0
     let mut new_button: (u8, u8) = (2, 0);
-    let mut new_code: Vec<char> = Vec::new();
 
-    data.lines().for_each(|line| {
-        line.chars().into_iter().for_each(|instruction| {
-            match instruction {
-                'U' => new_move_up(&mut new_button, new_keypad),
-                'D' => new_move_down(&mut new_button, new_keypad),
-                'R' => new_move_right(&mut new_button, new_keypad),
-                'L' => new_move_left(&mut new_button, new_keypad),
-                _ => new_button,
-            };
-        });
-        new_code.push(new_keypad[new_button.0 as usize][new_button.1 as usize]);
-    });
+    let new_code: Vec<char> = data
+        .lines()
+        .map(|line| {
+            line.chars().into_iter().for_each(|instruction| {
+                match instruction {
+                    'U' => new_move_up(&mut new_button, new_keypad),
+                    'D' => new_move_down(&mut new_button, new_keypad),
+                    'R' => new_move_right(&mut new_button, new_keypad),
+                    'L' => new_move_left(&mut new_button, new_keypad),
+                    _ => new_button,
+                };
+            });
+            new_keypad[new_button.0 as usize][new_button.1 as usize]
+        })
+        .collect();
 
     println!("the correct bathroom code is: {:?}", new_code);
 }
