@@ -74,8 +74,6 @@ fn main() {
         current_node = nodes_to_visit[i];
         nodes_to_visit.remove(i);
 
-        println!("current node: {:?}", current_node);
-
         if current_node.g == MAX_STEPS {
             println!(
                 "{:?} locations can be reached in at most 50 steps",
