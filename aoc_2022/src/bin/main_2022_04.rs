@@ -11,15 +11,13 @@ fn main() {
     let split_pairs: Vec<(u16, u16, u16, u16)> = data
         .lines()
         .map(|line| {
-            let split_pair: Vec<&str> = line.split(',').collect();
-            let split_e1: Vec<&str> = split_pair[0].split('-').collect();
-            let split_e2: Vec<&str> = split_pair[1].split('-').collect();
+            let split_pair: Vec<&str> = line.split(&[',', '-']).collect();
 
             (
-                split_e1[0].parse::<u16>().unwrap(),
-                split_e1[1].parse::<u16>().unwrap(),
-                split_e2[0].parse::<u16>().unwrap(),
-                split_e2[1].parse::<u16>().unwrap(),
+                split_pair[0].parse::<u16>().unwrap(),
+                split_pair[1].parse::<u16>().unwrap(),
+                split_pair[2].parse::<u16>().unwrap(),
+                split_pair[3].parse::<u16>().unwrap(),
             )
         })
         .collect();
