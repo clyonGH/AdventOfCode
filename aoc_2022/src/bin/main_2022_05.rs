@@ -67,10 +67,11 @@ fn main() {
         }
     });
 
-    (0..all_crates.len()).for_each(|index| {
-        print!("{:?}", all_crates[index].pop().unwrap());
-    });
-    println!(" are the crates that end up on the top of each stack");
+    let ans1: String = all_crates
+        .iter_mut()
+        .map(|stack| stack.pop().unwrap())
+        .collect();
+    println!("{ans1} are the crates that end up on the top of each stack");
 
     // second part
     data.lines().enumerate().for_each(|(line_nb, line)| {
@@ -91,9 +92,9 @@ fn main() {
         }
     });
 
-    print!("after the rearrangement ");
-    (0..all_crates_sec.len()).for_each(|index| {
-        print!("{:?}", all_crates_sec[index].pop().unwrap());
-    });
-    println!(" are the crates that end up on the top of each stack");
+    let ans2: String = all_crates_sec
+        .iter_mut()
+        .map(|stack| stack.pop().unwrap())
+        .collect();
+    println!("after the rearrangement {ans2} are the crates that end up on the top of each stack");
 }
