@@ -1,7 +1,6 @@
+use itertools::Itertools;
 use std::fs::File;
 use std::io::prelude::*;
-
-use itertools::Itertools;
 
 const DISC_1_SIZE: usize = 272;
 const DISC_2_SIZE: usize = 35651584;
